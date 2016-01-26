@@ -1,0 +1,78 @@
+This file outlines the HLP (Higher-Layer Protocol) to be used within the ARBS system
+	
+Msg Types:
+1	Unlock Bike Req                 (Master -> Slave)
+2	Unlock Bike Ack                 (Slave -> Master)
+3   Return Bike Req                 (Master -> Slave)
+4	Return Bike Ack                 (Slave -> Master)
+5	Bike Returned Notification      (Slave -> Master)
+6	Bike Returned Ack               (Master -> Slave)
+7	Status Req			            (Master -> Slave)
+8	Status Resp                     (Slave -> Master)
+
+The CAN protocol allows for filtering of messages before they are kicked up to the MCU.
+For our system, this filtering functionality is used to allow rack nodes to only accept messages from the 
+Kiosk node, and vice-versa.  It does so by constraining the Identifiers as follows:
+*** SLAVE (RACK) NODE ID's CAN BE LESS THAN OR EQUAL TO 255
+*** MASTER (KIOSK) ID MUST BE SET TO 2047
+*** ID IS SET IN MCP25625.h FILE
+
+Once a message is accepted into the receive buffer, there are 8 data bytes associated with the message that are used for this protocol
+
+The First byte is the message type Identifier, listed above.
+
+Message Definitions:
+
+Unlock Bike Req 
+	byte 0 : 1
+	byte 1 : slave ID (This is why slave ID's are restricted to fit in a single byte)
+	bytes 2-7 : Don't care
+
+Unlock Bike Ack
+	byte 0 : 2
+	byte 1 : 0 - Confirm unlock, 1 - already unlocked, 2 - other error
+	bytes 2-7 : Don't Care 
+
+Return Bike Req
+	byte 0 : 3
+	byte 1 : slave ID (This is why slave ID's are restricted to fit in a single byte)
+	bytes 2-7 : Don't care
+	
+Return Bike Ack
+	byte 0 : 4
+	byte 1 : 0 - Confirm unlock, 1 - already unlocked, 2 - Bike Already Present, 3 - other error
+	bytes 2-7 : Don't care
+	
+Bike Returned Notification
+	byte 0 : 5
+	byte 1 : Bike ID HIGH  NOTE - implies bike ID's are of unsigned short type
+	byte 2 : Bike ID LOW	
+	bytes 3-7 : Don't care
+
+Bike Returned Ack
+	byte 0 : 6
+	byte 1 : slave ID (This is why slave ID's are restricted to fit in a single byte)
+	bytes 2-7 : Don't care
+	
+Status Req
+	byte 0 : 7
+	bytes 1-7 : Don't care
+	
+Status Resp
+	byte 0 : 8
+	byte 1 : slave ID (This is why slave ID's are restricted to fit in a single byte)
+	byte 2 : 0 - bike not present, 1 - bike present
+	byte 3 : Bike ID HIGH  NOTE - bytes 3, 4 only applicable if byte 2 has value 1
+	byte 4 : Bike ID LOW
+	byte 5 : 0 - solenoid is currently locked, 1 - solenoid is unlocked waiting for bike removal, 2 - solenoid is unlocked waiting for bike return
+	byte 6 - 7 : Don't care
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
