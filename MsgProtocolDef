@@ -60,12 +60,11 @@ Status Req
 	
 Status Resp
 	byte 0 : 8
-	byte 1 : slave ID (This is why slave ID's are restricted to fit in a single byte)
-	byte 2 : 0 - bike not present, 1 - bike present
-	byte 3 : Bike ID HIGH  NOTE - bytes 3, 4 only applicable if byte 2 has value 1
-	byte 4 : Bike ID LOW
-	byte 5 : 0 - solenoid is currently locked, 1 - solenoid is unlocked waiting for bike removal, 2 - solenoid is unlocked waiting for bike return
-	byte 6 - 7 : Don't care
+	byte 1 : 0 - bike not present, 1 - bike present
+	byte 2 : Bike ID HIGH  NOTE - bytes 3, 4 only applicable if byte 2 has value 1
+	byte 3 : Bike ID LOW
+	byte 4 : 0 - solenoid is currently locked, 1 - solenoid is unlocked waiting for bike removal, 2 - solenoid is unlocked waiting for bike return
+	byte 5 - 7 : Don't care
 	
 	
 	

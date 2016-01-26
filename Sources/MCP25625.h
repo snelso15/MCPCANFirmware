@@ -29,7 +29,7 @@
  * MASTER (KIOSK) ID is always 2047  (first bit out of 11 is a 1)
  * ALL SLAVE (RACK) ID's ARE <= 1023 (first bit out of 11 is a 0)
  *  */
-static volatile unsigned short unitId = 2047; //slave <= 1023, master = 2047
+static volatile unsigned short unitId = 2047; //slave <= 255, master = 2047
 
 
 /* ************************************************
