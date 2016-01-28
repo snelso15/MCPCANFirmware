@@ -15,5 +15,13 @@ struct CANMsg {
 	uint8_t data[8]; //8 data bytes
 };
 
+struct SlaveState {
+	uint8_t status; //0 - locked w/ bike
+				   //1 - unlocked w/ bike, before user removes
+				   //2 - locked w/o bike, after user has removed
+				   //3 - unlocked w/o bike, waiting for return
+	short bikeId;   //ID of the locked bike, reads 0 if bike not present
+	uint8_t bikeBattery; //value (if implemented) of the Bike's on-board battery
+};
 
 #endif /* SOURCES_CANDATACONTAINERS_H_ */
